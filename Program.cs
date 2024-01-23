@@ -1,7 +1,15 @@
+using MvcFriends.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+string connectionString = builder.Configuration.GetConnectionString("FriendContext");
+
+builder.Services.AddDbContext<FriendContext>(options=>{
+    options.UseSqlServer(connectionString);
+});
 
 var app = builder.Build();
 
