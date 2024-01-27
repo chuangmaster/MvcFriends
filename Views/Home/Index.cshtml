@@ -1,8 +1,16 @@
-﻿@{
+﻿@using Microsoft.Extensions.Options;
+@inject IOptionsMonitor<DevelperOptions> develperOptions;
+@{
     ViewData["Title"] = "Home Page";
+    var develperOption = develperOptions.CurrentValue;
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <ul>
+        <li>Name:@develperOption.Name</li>
+        <li>Date:@develperOption.Date</li>
+    </ul>
 </div>
+

@@ -7,11 +7,16 @@ builder.Services.AddControllersWithViews();
 
 string connectionString = builder.Configuration.GetConnectionString("FriendContext");
 
+builder.Services.Configure<DevelperOptions>(option=>{
+    builder.Configuration.GetSection("Developer").Bind(option);
+});
+
 builder.Services.AddDbContext<FriendContext>(options=>{
     options.UseSqlServer(connectionString);
 });
 
-var app = builder.Build();
+
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
