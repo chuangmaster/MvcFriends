@@ -3,14 +3,49 @@
 @{
     ViewData["Title"] = "Home Page";
     var develperOption = develperOptions.CurrentValue;
+    string DisplayEnv(string envName) => envName switch
+    {
+        "Development" => "Development env.",
+        "Staging" => "Staging env.",
+        "Production" => "Production env.",
+        _ => "Other env."
+    };
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>Current Environment is: @DisplayEnv(ViewBag.Env)</p>
+    <environment include="Development">
+        <h2><span class="badge bg-primary">Development 開發環境 </span></h2>
+    </environment>
+    <environment include="Staging">
+        <h2><span class="badge bg-primary">Staging 開發環境 </span></h2>
+    </environment>
+    <environment include="Production">
+        <h2><span class="badge bg-primary">Production 開發環境 </span></h2>
+    </environment>
     <ul>
         <li>Name:@develperOption.Name</li>
         <li>Date:@develperOption.Date</li>
     </ul>
 </div>
+
+@section endJs{
+    <environment include="Development">
+        <script>
+            alert('Hello! This is Development mode');
+        </script>    
+    </environment>
+    <environment include="Staging">
+        <script>
+            alert('Hello! This is Staging mode');
+        </script> 
+    </environment>
+    <environment include="Production">
+        <script>
+            alert('Hello! This is Production mode');
+        </script> 
+    </environment>
+}
 
