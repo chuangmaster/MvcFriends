@@ -18,6 +18,7 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         ViewBag.Env = _Env.EnvironmentName;
+        ViewData["ContentRootPath"] = _Env.ContentRootPath;
         return View();
     }
 
