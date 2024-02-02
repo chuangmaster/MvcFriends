@@ -19,7 +19,9 @@
     <p>ContentRootPath: @ViewData["ContentRootPath"].ToString()</p>
     <img src="~/StaticFiles/image.png" alt="">
     <img src="~/image.png" alt=""> 
-
+        <h3><span class="badge bg-primary">PageName @ViewBag.PageName </span></h2>
+        <h3><span class="badge bg-primary">Page Editor @ViewBag.Editor </span></h2>
+        
     <environment include="Development">
         <h2><span class="badge bg-primary">Development 開發環境 </span></h2>
     </environment>
@@ -35,21 +37,28 @@
     </ul>
 </div>
 
-@section endJs{
-    <environment include="Development">
-        <script>
-            alert('Hello! This is Development mode');
-        </script>    
-    </environment>
-    <environment include="Staging">
-        <script>
-            alert('Hello! This is Staging mode');
-        </script> 
-    </environment>
-    <environment include="Production">
-        <script>
-            alert('Hello! This is Production mode');
-        </script> 
-    </environment>
+@section endJs {
+        <environment include="Development">
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <script>
+                    alert('@TempData["ErrorMessage"]');
+                </script>
+            }else{
+                <script>
+                     alert('Hello! This is Development mode');
+                </script>  
+            }
+        </environment>
+        <environment include="Staging">
+            <script>
+                alert('Hello! This is Staging mode');
+            </script> 
+        </environment>
+        <environment include="Production">
+            <script>
+                alert('Hello! This is Production mode');
+            </script> 
+        </environment>
 }
 

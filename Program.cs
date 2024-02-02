@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
     Args = args,
     ApplicationName = typeof(Program).Assembly.FullName,
-    EnvironmentName = Environments.Staging,
+    // EnvironmentName = Environments.Staging,
     ContentRootPath = Directory.GetCurrentDirectory(),
     // WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "StaticFileLibrary")
 });
@@ -18,6 +18,7 @@ System.Console.WriteLine($"WebRoot Name: {builder.Environment.WebRootPath}");
 
 
 // Add services to the container.
+builder.Services.AddSession();
 builder.Services.AddControllersWithViews();
 
 string connectionString = builder.Configuration.GetConnectionString("FriendContext");
@@ -27,10 +28,13 @@ builder.Services.Configure<DevelperOptions>(option =>
     builder.Configuration.GetSection("Developer").Bind(option);
 });
 
+
 builder.Services.AddDbContext<FriendContext>(options =>
 {
     options.UseSqlServer(connectionString);
 });
+
+builder.Logging.AddConsole();
 
 
 WebApplication app = builder.Build();
@@ -58,5 +62,5 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
+app.UseSession();
 app.Run();
